@@ -1,0 +1,11 @@
+{
+	"manifest_version" : 2,
+	"name" : "Facebook Code",
+	"version" : "0.0.1",
+	"content_scripts" : [
+		{
+			"matches" : ["*://*.facebook.com/*"],
+			"js" : ["run_prettify.js", "content.js"]
+		}
+	]
+}
