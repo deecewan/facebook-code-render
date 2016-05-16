@@ -36,23 +36,20 @@ function processComments() {
 	                blocks[i] = code.outerHTML;
 	            }
 	        }
-	        console.log(blocks);
-	        blocks = blocks.join("").replace(/&lt;n&gt;/g, '<br>');
+		// add in HTML new-lines
+	        blocks = blocks.join("").replace(/\n/g, '<br>');
 	        el.outerHTML = blocks;
 	        PR.prettyPrint();
 	});
 }
 
 window.addEventListener('load', processComments);
-document.addEventListener('click', function(){
-	setTimeout(function(){processComments()}, 500);
-})
+// watch the dom for changes
+var observer = new window.MutationObserver(function(m, o){
+	processComments();
+});
 
-//TODO: hack in AJAX listening
-// this doesn't actually do anything...
-// var xmlOpen = XMLHttpRequest.prototype.open;
-// XMLHttpRequest.prototype.open = function(){
-// 	console.log('opening');
-// 	this.addEventListener("readystatechange", processComments);
-// 	xmlOpen.apply(this, arguments);
-// }
+observer.observe(document, {
+	subtree : true,
+	childList: true
+});
